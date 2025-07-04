@@ -1,0 +1,42 @@
+body {
+  background: linear-gradient(to right, #e0f7fa, #80deea); /* Light teal gradient */
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+}
+
+header {
+  background-color: #006064; /* Dark cyan */
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+  background-color: #004d40; /* Teal shade */
+  color: #e0f2f1;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.homepage-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80vh;
+}
+
+.custom-btn {
+  padding: 12px 30px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  color: white;
+  background-color: #00796b; /* Medium teal */
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.2s ease-in-out;
+}
+
+.custom-btn:hover {
+  background-color: #004d40; /* Darker teal on hover */
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
