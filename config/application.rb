@@ -1,12 +1,17 @@
-require_relative "boot"
+# frozen_string_literal: true
 
-require "rails/all"
+# the Rails application. It sets defaults, autoload paths, and other
+# global behaviors for the app.
+require_relative 'boot'
+
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
 module Demo1
+  # Demo1::Application is the main class responsible for configuring
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0

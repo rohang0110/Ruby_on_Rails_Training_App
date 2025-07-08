@@ -1,8 +1,110 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+AllCops:
+  Exclude:
+    - 'bin/*'
+    - 'db/schema.rb'
+    - 'db/queue_schema.rb'
+# Checks that assignment indentation aligns with the start of the line.
+Layout/AssignmentIndentation:
+  Enabled: true
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+# Ensures comments are properly indented.
+Layout/CommentIndentation:
+  Enabled: true
+
+# Checks for two or more consecutive blank lines.
+Layout/EmptyLines:
+  Enabled: true
+  Exclude:
+    - 'bin/setup'
+
+# Checks that there is a blank line between method definitions.
+Layout/EmptyLineBetweenDefs:
+  Enabled: true
+
+# Ensures consistent indentation for the first key-value pair in a hash.
+Layout/FirstHashElementIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+
+# Ensures indentation is consistent throughout the file.
+Layout/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: normal
+
+# Checks that code uses spaces or tabs consistently for indentation.
+Layout/IndentationStyle:
+  Enabled: true
+
+# Enforces a consistent number of spaces used for indentation.
+Layout/IndentationWidth:
+  Enabled: true
+  Width: 2
+
+# Ensures rescue/ensure keywords are aligned correctly with begin or def.
+Layout/RescueEnsureAlignment:
+  Enabled: true
+
+# Checks for spaces around block parameters like `|x, y|`.
+Layout/SpaceAroundBlockParameters:
+  Enabled: true
+
+# Ensures there is a space before the opening brace in a block.
+Layout/SpaceBeforeBlockBraces:
+  Enabled: true
+
+# Checks spacing inside block braces `{}`.
+Layout/SpaceInsideBlockBraces:
+  Enabled: true
+
+# Checks spacing inside hash literal braces `{ key: value }`.
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+
+# Requires parentheses around parameters in method calls.
+Lint/RequireParentheses:
+  Enabled: true
+
+# Checks for trailing whitespace at the end of lines.
+Layout/TrailingWhitespace:
+  Enabled: true
+
+# Prevents using non-ASCII characters in identifiers.
+Naming/AsciiIdentifiers:
+  Enabled: true
+
+# Ensures class and module names use CamelCase.
+Naming/ClassAndModuleCamelCase:
+  Enabled: true
+
+# Enforces that file names match the name of the class/module they define.
+Naming/FileName:
+  Enabled: true
+
+# Enforces snake_case for method names.
+Naming/MethodName:
+  Enabled: true
+
+# Enforces boolean method names to end with a question mark.
+Naming/PredicateName:
+  Enabled: true
+
+# Enforces snake_case for variable names.
+Naming/VariableName:
+  Enabled: true
+
+# Disallows use of `and` and `or` in favor of `&&` and `||`.
+Style/AndOr:
+  Enabled: true
+
+# Enforces consistent use of `{}` or `do..end` for blocks.
+Style/BlockDelimiters:
+  Enabled: true
+
+# Enforces a consistent style for hash literals, e.g. Ruby 1.9 style.
+Style/HashSyntax:
+  Enabled: true
+  EnforcedStyle: ruby19
+
+# Enforces underscores in long numeric literals for readability.
+Style/NumericLiterals:
+  Enabled: true
