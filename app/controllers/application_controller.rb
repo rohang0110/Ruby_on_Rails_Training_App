@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# The base controller for all other controllers in the application.
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -14,5 +13,10 @@ class ApplicationController < ActionController::Base
                      password_confirmation]
     devise_parameter_sanitizer.permit(:sign_up, keys: added_attrs)
     devise_parameter_sanitizer.permit(:account_update, keys: added_attrs)
+  end
+
+  # The path used after sign in
+  def after_sign_in_path_for(resource)
+    '/homepage'
   end
 end

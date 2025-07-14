@@ -25,8 +25,7 @@ gem 'haml-rails'
 gem 'jbuilder'
 gem 'rspec-rails'
 gem 'rubocop', require: false
-gem 'selenium-webdriver'
-gem 'webdrivers'
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
@@ -66,8 +65,3 @@ group :development do
   gem 'web-console'
 end
 
-group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem 'capybara'
-  gem 'selenium-webdriver'
-end
