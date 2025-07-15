@@ -1,14 +1,18 @@
+# frozen_string_literal: true
+
 # lib/build/database_builder.rb
 
 require 'faker'
 
 module Build
+  # Build::DatabaseBuilder is a utility class to generate test database content for development or seeding.
   class DatabaseBuilder
     def reset_data
       User.destroy_all
       puts 'All users destroyed'
     end
 
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def create_users
       10.times do
         dob = Faker::Date.birthday(min_age: 18, max_age: 60)
@@ -30,6 +34,7 @@ module Build
       puts '10 users created'
     end
 
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
     def calculate_age_from_dob(dob)
       today = Date.today
       age = today.year - dob.year
