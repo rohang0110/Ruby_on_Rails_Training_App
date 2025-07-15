@@ -9,10 +9,9 @@ module Api
       api :GET, '/api/v1/users', 'List all users'
       description 'Retrieves a list of all registered users with specified attributes.'
       formats ['json']
-      example
       def index
         @users = User.all
-        render json: @users
+        render json: @users, each_serializer: UserSerializer
       end
     end
   end
