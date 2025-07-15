@@ -42,6 +42,7 @@ module Build
       create_users
     end
 
+    # This method is called to run the database builder
     def run
       execute
     end

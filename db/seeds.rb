@@ -10,7 +10,6 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # db/seeds.rb
-
 require_relative '../lib/build/database_builder'
 
 Build::DatabaseBuilder.new.run
