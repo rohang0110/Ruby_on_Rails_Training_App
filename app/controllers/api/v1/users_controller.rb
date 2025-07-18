@@ -6,11 +6,14 @@ module Api
       skip_before_action :verify_authenticity_token
 
       # List all users
-      api :GET, '/api/v1/users', 'List all users'
-      description 'Retrieves a list of all registered users with specified attributes.'
+      api :GET, '/api/v1/users', 'List all users '
+      param :first_name, String, desc: 'Filter by first name '
+      param :last_name, String, desc: 'Filter by last name '
+      param :email, String, desc: 'Filter by email'
+      description 'Retrieves a list of all registered users. Supports filtering by first name, last name, and email.'
       formats ['json']
       def index
-        @users = User.all
+        @users = Api::V1::UsersQuery.new(params).call
         render json: @users, each_serializer: UserSerializer
       end
 
