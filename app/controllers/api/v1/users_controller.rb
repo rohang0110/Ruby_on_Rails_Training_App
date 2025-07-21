@@ -3,7 +3,7 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      skip_before_action :verify_authenticity_token
+      before_action :authenticate_admin!
 
       api :GET, '/api/v1/users', 'List all users '
       param :first_name, String, desc: 'Filter by first name '

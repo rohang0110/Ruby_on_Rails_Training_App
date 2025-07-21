@@ -4,10 +4,15 @@ require 'rails_helper'
 
 RSpec.describe 'GET /api/v1/users/:id', type: :request do
   let!(:user) { create(:user) }
+  let(:token) { create(:token) }
+
+  describe 'Unauthorized access' do
+    it_behaves_like 'unauthorized access', :get, "/api/v1/users/#{user.id}"
+  end
 
   context 'when the user exists' do
     it 'returns the user with status 200' do
-      get "/api/v1/users/#{user.id}", as: :json
+      get "/api/v1/users/#{user.id}", headers: { 'Authorization' => token.value }
 
       expect(response).to have_http_status(:ok)
 
@@ -23,7 +28,7 @@ RSpec.describe 'GET /api/v1/users/:id', type: :request do
 
   context 'when the user does not exist' do
     it 'returns 404 with an error message' do
-      get '/api/v1/users/999999', as: :json
+      get '/api/v1/users/999999', headers: { 'Authorization' => token.value }
 
       expect(response).to have_http_status(:not_found)
 
