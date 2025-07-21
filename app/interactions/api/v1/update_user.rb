@@ -5,44 +5,32 @@ module Api
     class UpdateUser < ActiveInteraction::Base
       integer :id
 
-      string :first_name, :last_name, :email, :phone_number, :gender, :city, :state, :country, :password,
-             :password_confirmation, default: nil
+      string  :first_name, :last_name, :email, :phone_number, :gender,
+              :city, :state, :country, :password, :password_confirmation,
+              default: nil
       integer :age, default: nil
-      date :date_of_birth, default: nil
+      date    :date_of_birth, default: nil
 
-      validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_nil: true
-      validates :phone_number, length: { is: 10 }, allow_nil: true
-      validates :gender, inclusion: { in: %w[male female other] }, allow_nil: true
-
-      validate :check_user_presence
       validate :validate_age_and_dob_match
 
       def execute
-        return unless user
+        user = User.find(id)
 
-        Rails.logger.debug "INPUTS: #{inputs.inspect}"
         user.assign_attributes(filtered_inputs)
 
-        unless user.save
-          errors.merge!(user.errors)
-          return
-        end
+        return user if user.save
 
-        user
+        errors.merge!(user.errors)
+        nil
+      rescue ActiveRecord::RecordNotFound
+        errors.add(:id, 'User not found')
+        nil
       end
 
       private
 
-      def user
-        @user ||= User.find_by(id: id)
-      end
-
-      def check_user_presence
-        errors.add(:id, 'User not found') unless user
-      end
-
       def filtered_inputs
-        inputs.except(:id).select { |_k, v| !v.nil? && !(v.respond_to?(:empty?) && v.empty?) }
+        inputs.except(:id).select { |_key, value| value.present? }
       end
 
       def validate_age_and_dob_match
@@ -50,12 +38,11 @@ module Api
 
         today = Date.today
         dob_this_year = date_of_birth.change(year: today.year)
+
         calculated_age = today.year - date_of_birth.year
         calculated_age -= 1 if today < dob_this_year
 
-        return unless calculated_age != age
-
-        errors.add(:age, 'does not match date of birth')
+        errors.add(:age, 'does not match date of birth') if calculated_age != age
       end
     end
   end

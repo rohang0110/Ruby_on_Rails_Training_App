@@ -5,7 +5,6 @@ module Api
     class UsersController < ApplicationController
       skip_before_action :verify_authenticity_token
 
-      # List all users
       api :GET, '/api/v1/users', 'List all users '
       param :first_name, String, desc: 'Filter by first name '
       param :last_name, String, desc: 'Filter by last name '
@@ -17,13 +16,12 @@ module Api
         render json: @users, each_serializer: UserSerializer
       end
 
-      # Fetch user by ID
       api :GET, '/api/v1/users/:id', 'Fetch user by ID'
       param :id, :number, required: true, desc: 'ID of the user'
       description 'Returns a single user based on the provided ID.'
       formats ['json']
       def show
-        user = User.find_by(id: params[:id])
+        user = User.find(id: params[:id])
         if user
           render json: user, serializer: UserSerializer, status: :ok
         else
@@ -31,7 +29,6 @@ module Api
         end
       end
 
-      # Create a new user
       api :POST, '/api/v1/users', 'Register a new user'
       param :first_name, String, required: true
       param :last_name, String, required: true
@@ -43,10 +40,9 @@ module Api
       param :password_confirmation, String, required: true
       def create
         result = Api::V1::CreateUser.run(user_params)
-        render_interaction_result(result, :created)
+        render_serializer_result(result, :created)
       end
 
-      # Update an existing user
       api :PUT, '/api/v1/users/:id', 'Update an existing user'
       param :id, :number, required: true
       param :first_name, String, required: false
@@ -59,10 +55,9 @@ module Api
       param :password_confirmation, String, required: false
       def update
         result = Api::V1::UpdateUser.run(user_params(include_id: true))
-        render_interaction_result(result, :ok)
+        render_serializer_result(result, :ok)
       end
 
-      # Delete a user
       api :DELETE, '/api/v1/users/:id', 'Delete an existing user'
       param :id, :number, required: true, desc: 'ID of the user to be deleted'
       description 'Deletes the user by ID and returns a success message.'
@@ -93,7 +88,7 @@ module Api
       end
 
       # Common render logic
-      def render_interaction_result(result, success_status)
+      def render_serializer_result(result, success_status)
         if result.valid?
           render json: result.result, serializer: UserSerializer, status: success_status
         else
