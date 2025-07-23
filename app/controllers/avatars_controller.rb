@@ -16,12 +16,8 @@ class AvatarsController < ApplicationController
   end
 
   def destroy
-    if current_user.avatar.attached?
-      current_user.avatar.purge
-      redirect_to root_path, notice: 'Avatar deleted successfully.'
-    else
-      redirect_to root_path, alert: 'No avatar to delete.'
-    end
+    current_user.avatar.purge
+    redirect_to edit_avatar_path, notice: 'Avatar deleted successfully.'
   end
 
   private
