@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resource :profile, only: %i[edit update]
+
   apipie
   devise_for :users
   get 'homepage', to: 'home#index'

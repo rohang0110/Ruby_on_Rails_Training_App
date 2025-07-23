@@ -1,0 +1,36 @@
+.container.mt-4
+  %h2 Update Personal Data
+
+  - if @user.errors.any?
+    .alert.alert-danger
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+
+  = form_for @user, url: profile_path, method: :patch do |f|
+    .row
+      .col-md-6.mb-3
+        = f.label :first_name
+        = f.text_field :first_name, class: "form-control", required: true
+
+      .col-md-6.mb-3
+        = f.label :last_name
+        = f.text_field :last_name, class: "form-control", required: true
+
+      .col-md-6.mb-3
+        = f.label :email
+        = f.email_field :email, class: "form-control", required: true
+
+      .col-md-6.mb-3
+        = f.label :phone_number
+        = f.telephone_field :phone_number, class: "form-control", required: true
+
+      .col-md-6.mb-3
+        = f.label :age
+        = f.number_field :age, class: "form-control", required: true, min: 1
+
+      .col-md-6.mb-3
+        = f.label :date_of_birth
+        = f.date_select :date_of_birth, start_year: 1900, end_year: Date.today.year - 5, class: "form-control"
+
+    = f.submit "Update", class: "btn btn-primary mt-3"
