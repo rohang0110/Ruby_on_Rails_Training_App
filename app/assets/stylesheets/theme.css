@@ -147,3 +147,65 @@ footer {
 .text-teal {
   color: var(--teal-medium);
 }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.restaurant-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    .status-badge {
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: #fff;
+
+      &.open { background-color: #28a745; }
+      &.closed { background-color: #ffc107; }
+      &.archived { background-color: #6c757d; }
+    }
+  }
+
+  .card-body {
+    margin-top: 0.75rem;
+
+    p {
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+
+      strong {
+        display: inline-block;
+        width: 90px;
+        font-weight: 600;
+      }
+    }
+  }
+}

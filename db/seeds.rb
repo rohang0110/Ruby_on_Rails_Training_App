@@ -13,3 +13,6 @@
 require_relative '../lib/build/database_builder'
 
 Build::DatabaseBuilder.new.run
+
+require_relative '../lib/build/restaurant_builder'
+Build::RestaurantBuilder.new.run

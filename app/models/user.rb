@@ -6,6 +6,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :restaurants, dependent: :destroy
+
   # Validations
   validates :first_name, :last_name, :phone_number, :date_of_birth, :age, presence: true
   validates :age, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
