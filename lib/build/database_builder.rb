@@ -1,24 +1,19 @@
 # frozen_string_literal: true
 
-# lib/build/database_builder.rb
-
 require 'faker'
 
 module Build
-  # Build::DatabaseBuilder is a utility class to generate test database content for development or seeding.
   class DatabaseBuilder
     def reset_data
+      Restaurant.destroy_all
       User.destroy_all
-      puts 'All users destroyed'
+      puts 'All restaurants and users destroyed'
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def create_users
       10.times do
         dob = Faker::Date.birthday(min_age: 18, max_age: 60)
-        today = Date.today
-        age = today.year - dob.year
-        age -= 1 if dob > Date.new(today.year, dob.month, dob.day)
+        age = calculate_age_from_dob(dob)
 
         User.create!(
           first_name: Faker::Name.first_name,
@@ -34,7 +29,33 @@ module Build
       puts '10 users created'
     end
 
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+    def create_restaurants
+      users = User.all
+      return puts 'No users found. Seed users first.' if users.blank?
+
+      puts 'Seeding Restaurants...'
+
+      seed_restaurants_with_status(:open, 20, users)
+      seed_restaurants_with_status(:closed, 20, users)
+      seed_restaurants_with_status(:archived, 20, users)
+
+      puts 'Finished seeding restaurants'
+    end
+
+    def seed_restaurants_with_status(status, count, users)
+      count.times do
+        Restaurant.create!(
+          name: Faker::Restaurant.name,
+          description: Faker::Restaurant.description,
+          location: Faker::Address.city,
+          cuisine_type: Faker::Restaurant.type,
+          rating: rand(1.0..5.0).round(1),
+          status: status,
+          user: users.sample
+        )
+      end
+    end
+
     def calculate_age_from_dob(dob)
       today = Date.today
       age = today.year - dob.year
@@ -45,9 +66,9 @@ module Build
     def execute
       reset_data
       create_users
+      create_restaurants
     end
 
-    # This method is called to run the database builder
     def run
       execute
     end
