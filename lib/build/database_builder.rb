@@ -13,7 +13,9 @@ module Build
     def create_users
       10.times do
         dob = Faker::Date.birthday(min_age: 18, max_age: 60)
-        age = calculate_age_from_dob(dob)
+        today = Date.today
+        age = today.year - dob.year
+        age -= 1 if dob > Date.new(today.year, dob.month, dob.day)
 
         User.create!(
           first_name: Faker::Name.first_name,
@@ -27,6 +29,13 @@ module Build
         )
       end
       puts '10 users created'
+    end
+
+    def calculate_age_from_dob(dob)
+      today = Date.today
+      age = today.year - dob.year
+      age -= 1 if Date.new(today.year, dob.month, dob.day) > today
+      age
     end
 
     def create_restaurants
@@ -46,21 +55,14 @@ module Build
       count.times do
         Restaurant.create!(
           name: Faker::Restaurant.name,
-          description: Faker::Restaurant.description,
+          description: Faker::Lorem.paragraph_by_chars(number: 1000, supplemental: false),
           location: Faker::Address.city,
           cuisine_type: Faker::Restaurant.type,
-          rating: rand(1.0..5.0).round(1),
+          rating: rand(1..5),
           status: status,
           user: users.sample
         )
       end
-    end
-
-    def calculate_age_from_dob(dob)
-      today = Date.today
-      age = today.year - dob.year
-      age -= 1 if Date.new(today.year, dob.month, dob.day) > today
-      age
     end
 
     def execute
