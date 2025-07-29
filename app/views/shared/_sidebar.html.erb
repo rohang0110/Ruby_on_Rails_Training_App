@@ -6,28 +6,53 @@
 
   <div class="offcanvas-body">
     <ul class="nav flex-column">
-      <!-- My Profile -->
-      <li class="nav-item">
-        <a class="nav-link d-flex align-items-center" data-bs-toggle="collapse" href="#profileMenu" role="button" aria-expanded="false" aria-controls="profileMenu">
-          <i class="bi bi-person me-2"></i> My Profile
-        </a>
-        <div class="collapse ps-4" id="profileMenu">
-          <%= link_to 'Update Avatar', edit_avatar_path,class: "nav-link"%>
-          <%= link_to "Update personal data", edit_profile_path, class: "nav-link" %>
-        </div>
-      </li>
+      <% if current_user&.staff? %>
+        <!-- Staff Profile -->
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" data-bs-toggle="collapse" href="#profileMenu" role="button" aria-expanded="false" aria-controls="profileMenu">
+            <i class="bi bi-person me-2"></i> My Profile
+          </a>
+          <div class="collapse ps-4" id="profileMenu">
+            <%= link_to 'Update Avatar', edit_avatar_path, class: "nav-link" %>
+            <%= link_to "Update Personal Data", edit_profile_path, class: "nav-link" %>
+          </div>
+        </li>
 
-      <!-- Restaurants -->
-      <li class="nav-item">
-        <a class="nav-link d-flex align-items-center" data-bs-toggle="collapse" href="#restaurantMenu" role="button" aria-expanded="false" aria-controls="restaurantMenu">
-          <i class="bi bi-shop me-2"></i> Restaurants
-        </a>
-        <div class="collapse ps-4" id="restaurantMenu">
-          <%= link_to "Restaurants", restaurants_path, class: "nav-link" %>
-          <%= link_to "Create Restaurant", new_restaurant_path, class: "nav-link" %>
+        <!-- Staff Restaurants -->
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" data-bs-toggle="collapse" href="#restaurantMenu" role="button" aria-expanded="false" aria-controls="restaurantMenu">
+            <i class="bi bi-shop me-2"></i> Restaurants
+          </a>
+          <div class="collapse ps-4" id="restaurantMenu">
+            <%= link_to "Restaurants", restaurants_path, class: "nav-link" %>
+            <%= link_to "Create Restaurant", new_restaurant_path, class: "nav-link" %>
+          </div>
+        </li>
 
-        </div>
-      </li>
+      <% elsif current_user&.customer? %>
+        <!-- Customer Profile -->
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" data-bs-toggle="collapse" href="#profileMenu" role="button" aria-expanded="false" aria-controls="profileMenu">
+            <i class="bi bi-person me-2"></i> Profile
+          </a>
+          <div class="collapse ps-4" id="profileMenu">
+            <%= link_to 'Update Profile Picture', edit_avatar_path, class: "nav-link" %>
+            <%= link_to "Update Personal Information", edit_profile_path, class: "nav-link" %>
+          </div>
+        </li>
+
+        <!-- Customer Orders -->
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" data-bs-toggle="collapse" href="#ordersMenu" role="button" aria-expanded="false" aria-controls="ordersMenu">
+            <i class="bi bi-bag me-2"></i> Orders
+          </a>
+          <div class="collapse ps-4" id="ordersMenu">
+            <%= link_to "List of Orders", '#', class: "nav-link" %>
+            <%= link_to "Current Orders", '#', class: "nav-link" %>
+            <%= link_to "Past Orders", '#', class: "nav-link" %>
+          </div>
+        </li>
+      <% end %>
 
       <!-- Sign Out -->
       <li class="nav-item mt-3">

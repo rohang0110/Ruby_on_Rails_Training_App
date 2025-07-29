@@ -13,6 +13,7 @@ module Build
     def create_users
       10.times do
         dob = Faker::Date.birthday(min_age: 18, max_age: 60)
+        age = calculate_age_from_dob(dob)
         today = Date.today
         age = today.year - dob.year
         age -= 1 if dob > Date.new(today.year, dob.month, dob.day)
@@ -25,7 +26,9 @@ module Build
           date_of_birth: dob,
           phone_number: Faker::Number.number(digits: 10),
           password: 'Password@123',
-          password_confirmation: 'Password@123'
+          password_confirmation: 'Password@123',
+          role_type: :customer,
+          status: :active
         )
       end
       puts '10 users created'

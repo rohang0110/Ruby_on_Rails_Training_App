@@ -19,6 +19,8 @@ class User < ApplicationRecord
   validate :avatar_format
   validate :avatar_size
   validate :avatar_dimensions
+  enum :role_type, { admin: 1, staff: 2, customer: 3 }
+  enum :status, { active: 1, inactive: 2 }
 
   private
 

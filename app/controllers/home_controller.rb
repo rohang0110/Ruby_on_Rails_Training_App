@@ -2,5 +2,7 @@
 
 # HomeController handles the logic for the homepage.
 class HomeController < ApplicationController
-  def index; end
+  def index
+    @role = user_signed_in? ? current_user.role_type : nil
+  end
 end
