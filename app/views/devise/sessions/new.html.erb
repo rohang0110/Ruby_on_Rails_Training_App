@@ -12,8 +12,7 @@
       <% end %>
     </h2>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name, role: params[:role])) do |f| %>
       <%= f.hidden_field :role_type, value: params[:role] %>
 
       <div class="mb-3">
@@ -42,11 +41,14 @@
       <%= link_to "Forgot your password?", new_password_path(resource_name), class: "text-decoration-none text-muted" %>
     </div>
 
-    <div class="text-center mt-3">
-      <p class="text-muted">
-        Don't have an account?
-        <%= link_to "Sign up", new_user_registration_path, class: "text-success text-decoration-none" %>
-      </p>
-    </div>
+    <% if params[:role] == 'customer' %>
+      <div class="text-center mt-3">
+        <p class="text-muted">
+          Don't have an account?
+          <%= link_to "Sign up", new_user_registration_path, class: "text-success text-decoration-none" %>
+        </p>
+      </div>
+    <% end %>
+    
   </div>
 </div>

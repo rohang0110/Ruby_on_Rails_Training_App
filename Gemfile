@@ -24,6 +24,7 @@ gem 'factory_bot_rails'
 gem 'faker'
 gem 'haml-rails'
 gem 'jbuilder'
+gem 'pry'
 gem 'rspec-rails'
 gem 'rubocop', require: false
 gem 'selenium-webdriver'
