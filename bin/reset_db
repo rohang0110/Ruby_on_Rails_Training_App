@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo "Resetting the database..."
+
+# Drop the database
+echo "Dropping the database..."
+docker-compose run web rails db:drop
+
+# Create the database
+echo "Creating the database..."
+docker-compose run web rails db:create
+
+# Run migrations
+echo "Running migrations..."
+docker-compose run web rails db:migrate
+
+echo "Database reset completed!"
