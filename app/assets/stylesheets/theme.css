@@ -1,21 +1,74 @@
-/* Theme form styling */
+:root {
+  --teal-medium: #00796b;
+  --teal-dark: #004d40;
+  --teal-darker: #00695c;
+  --teal-light-bg: #e0f2f1;
+  --teal-border: #b2dfdb;
+  --white: #ffffff;
+  --red: #d32f2f;
+  --red-light: #ef9a9a;
+}
+
+/* Base Layout */
+body {
+  background: linear-gradient(to right, #e0f7fa, #80deea);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+}
+
+header {
+  background-color: var(--teal-darker);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+  background-color: var(--teal-dark);
+  color: var(--teal-light-bg);
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+.custom-btn,
+.registration-container .actions input[type="submit"],
+.btn-teal {
+  padding: 12px 30px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  color: white;
+  background-color: var(--teal-medium);
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.2s ease-in-out;
+}
+
+.custom-btn:hover,
+.registration-container .actions input[type="submit"]:hover,
+.btn-teal:hover {
+  background-color: var(--teal-dark);
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Forms */
 .container.registration-container {
   max-width: 600px;
   margin: 60px auto;
-  background-color: #ffffff;
+  background-color: var(--white);
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
 .registration-container h2 {
-  color: #FF6F61;
+  color: var(--teal-darker);
   margin-bottom: 20px;
 }
 
 .registration-container .field label {
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--teal-dark);
   margin-bottom: 5px;
   display: block;
 }
@@ -29,16 +82,68 @@
   margin-bottom: 15px;
 }
 
-.registration-container .actions input[type="submit"] {
-  background-color: #FF6F61;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+/* Offcanvas Sidebar */
+.offcanvas-start {
+  background-color: var(--teal-light-bg);
+  color: var(--teal-dark);
+  border-right: 1px solid var(--teal-border);
 }
 
-.registration-container .actions input[type="submit"]:hover {
-  background-color: #DAA5B3;
+.offcanvas-header .offcanvas-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--teal-darker);
+}
+
+.offcanvas-header .btn-close {
+  filter: invert(0.5);
+}
+
+/* Sidebar links */
+.offcanvas-body .nav-link {
+  color: var(--teal-dark);
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background 0.3s ease, color 0.3s ease;
+  margin-bottom: 6px;
+  padding: 8px 12px;
+}
+
+.offcanvas-body .nav-link:hover {
+  background-color: #80cbc4;
+  color: white;
+}
+
+/* Submenu collapsible section */
+.offcanvas-body .collapse .nav-link {
+  background-color: var(--teal-border);
+  margin: 4px 0;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+.offcanvas-body .collapse .nav-link:hover {
+  background-color: var(--teal-medium);
+  color: white;
+}
+
+/* Sign out link */
+.nav-link.text-danger {
+  color: var(--red) !important;
+}
+
+.nav-link.text-danger:hover {
+  background-color: var(--red-light);
+  color: white !important;
+}
+
+/* Container card styling */
+.avatar-update-container .card {
+  background-color: var(--white);
+  border-radius: 12px;
+}
+
+/* Teal text */
+.text-teal {
+  color: var(--teal-medium);
 }

@@ -12,6 +12,11 @@ class User < ApplicationRecord
   validates :phone_number, format: { with: /\A\d{10}\z/, message: 'must be 10 digits' }
 
   validate :age_matches_dob
+  has_one_attached :avatar
+
+  validate :avatar_format
+  validate :avatar_size
+  validate :avatar_dimensions
 
   private
 
@@ -26,4 +31,34 @@ class User < ApplicationRecord
 
     errors.add(:age, 'does not match your date of birth') if calculated_age != age
   end
+
+  def avatar_format
+    return unless avatar.attached?
+
+    return if avatar.content_type.in?(%w[image/jpeg image/png])
+
+    errors.add(:avatar, 'must be JPEG or PNG')
+  end
+
+  def avatar_size
+    return unless avatar.attached?
+
+    return unless avatar.byte_size > 10.megabytes
+
+    errors.add(:avatar, 'size must be less than 10MB')
+  end
+
+  def avatar_dimensions
+    return unless avatar.attached?
+
+    begin
+      avatar.analyze unless avatar.analyzed?
+      metadata = avatar.blob.metadata
+      [metadata[:width], metadata[:height]]
+    rescue ActiveStorage::FileNotFoundError
+      Rails.logger.warn("Missing avatar file for user #{id}")
+      nil
+    end
+  end
 end
+

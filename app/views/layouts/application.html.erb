@@ -25,32 +25,49 @@
     <%= stylesheet_link_tag "home", media: "all" %>
     <%= stylesheet_link_tag "theme", media: "all" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 
+  
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <!-- Navbar -->
-    <header class="bg-dark text-white p-3">
-      <div class="container d-flex justify-content-between align-items-center">
-          <% if user_signed_in? %>
-            <!-- Sidebar Toggle Button -->
-            <button class="btn btn-outline-light ms-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
-              <i class="bi bi-list"></i>
-            </button>
-          <% end %>
-        <h2 class="mb-0">MyApp</h2>
-        <nav>
-          <a href="/" class="text-white me-3 text-decoration-none">Home</a>
-          <a href="#" class="text-white text-decoration-none">About</a>
-        </nav>
-      </div>
-    </header>
+<header class="bg-dark text-white py-3 shadow-sm">
+  <div class="container d-flex justify-content-between align-items-center">
 
-    <!-- Sidebar Partial (only for signed-in users) -->
+    <!-- Left: Sidebar toggle (if signed in) and logo -->
+    <div class="d-flex align-items-center">
+      <% if user_signed_in? %>
+        <button class="btn btn-outline-light me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
+          <i class="bi bi-list"></i>
+        </button>
+      <% end %>
+      <a href="/" class="text-white text-decoration-none">
+        <h2 class="mb-0 fw-bold">MyApp</h2>
+      </a>
+    </div>
+
+    <!-- Right: Avatar (if signed in) -->
     <% if user_signed_in? %>
-      <%= render 'shared/sidebar' %>
+      <div class="d-flex align-items-center">
+        <%= link_to edit_avatar_path, class: "rounded-circle overflow-hidden border border-white", style: "width: 42px; height: 42px;" do %>
+          <% if current_user.avatar.attached? %>
+            <%= image_tag current_user.avatar.variant(resize_to_fill: [42, 42]), class: "img-fluid", alt: "Avatar" %>
+          <% else %>
+            <%= image_tag "default_avatar.png", class: "img-fluid", alt: "Avatar" %>
+          <% end %>
+        <% end %>
+      </div>
     <% end %>
+
+  </div>
+</header>
+
+<!-- Sidebar Partial (only if user is signed in) -->
+<% if user_signed_in? %>
+  <%= render 'shared/sidebar' %>
+<% end %>
+
 
     <!-- Flash Messages -->
     <p class="notice"><%= notice %></p>
