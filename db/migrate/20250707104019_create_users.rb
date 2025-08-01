@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# This migration creates the users table with basic personal details
+# like name, email, age, date of birth, and a password field.
 class CreateUsers < ActiveRecord::Migration[8.0]
   def change
     create_table :users do |t|
