@@ -15,7 +15,16 @@ class RestaurantsController < ApplicationController
   end
 
   def index
-    @restaurants = Restaurant.where(status: :open).order(created_at: :desc)
+    sortable_columns = %w[id name rating status]
+    @sort_column = sortable_columns.include?(params[:sort]) ? params[:sort] : 'id'
+
+    @sort_direction = if @sort_column == 'rating'
+                        'desc'
+                      else
+                        'asc'
+                      end
+    @restaurants = current_user.restaurants.order("#{@sort_column} #{@sort_direction}").paginate(page: params[:page],
+                                                                                                 per_page: 9)
   end
 
   private

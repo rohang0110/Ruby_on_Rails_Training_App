@@ -1,26 +1,30 @@
-%h2.text-center.mb-4 Open Restaurants
+%h2.text-center.mb-4 Restaurants
 
 .container
-  .card-grid
+  .row
     - @restaurants.each do |restaurant|
-      .restaurant-card
-        .card-header
-          %h3= restaurant.name
-          %span.status-badge= restaurant.status.titleize
+      .col-md-4.mb-4
+        .card.h-100.d-flex.flex-column
+          .card-header.bg-light.d-flex.justify-content-between.align-items-center
+            %h5.mb-0= restaurant.name
+            %span.badge.bg-secondary= restaurant.status.titleize
 
-        .card-body
-          %p
-            %strong Description:
-            = truncate(restaurant.description, length: 100)
+          .card-body.flex-grow-1
+            %p= truncate(restaurant.description, length: 100)
 
-          %p
-            %strong Location:
-            = restaurant.location
+            %p.d-flex.align-items-center
+              %i.fas.fa-map-marker-alt.text-muted.me-2.fs-5
+              = restaurant.location
 
-          %p
-            %strong Cuisine:
-            = restaurant.cuisine_type
+            %p.d-flex.align-items-center
+              %i.fas.fa-utensils.text-muted.me-2.fs-5
+              = restaurant.cuisine_type
 
-          %p
-            %strong Rating:
-            = restaurant.rating || 'N/A'
+            %p.d-flex.align-items-center
+              %i.fas.fa-star.text-warning.me-2.fs-5
+              = "#{restaurant.rating || 'N/A'} / 5"
+
+          .card-footer.bg-white.border-0.mt-auto
+            = link_to "View Tables", restaurant_tables_path(restaurant), class: "btn btn-sm btn-primary w-100"
+  
+= will_paginate @restaurants, params: { sort: params[:sort] }

@@ -32,6 +32,10 @@ Rails.application.routes.draw do
       resources :users, only: %i[index create show update destroy]
     end
   end
+  resources :restaurants, only: [:index] do
+    resources :tables, only: [:index], controller: 'restaurant_tables'
+  end
+
   # Defines the root path route ("/")
   # root "posts#index"
 end
