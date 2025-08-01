@@ -17,10 +17,15 @@ RSpec.describe 'POST /api/v1/users', type: :request do
     }
   end
 
+  describe 'Unauthorized access' do
+    it_behaves_like 'unauthorized access', :post, '/api/v1/users', valid_params
+  end
+
   describe 'POST /api/v1/users' do
     context 'with valid parameters' do
       it 'creates a user and returns 201' do
-        post '/api/v1/users', params: valid_params, as: :json
+        token = create(:token) # Make sure you have a valid token factory
+        post '/api/v1/users', params: valid_params, headers: { 'Authorization' => token.value }, as: :json
 
         expect(response).to have_http_status(:created)
         json = JSON.parse(response.body)
@@ -38,7 +43,9 @@ RSpec.describe 'POST /api/v1/users', type: :request do
 
     context 'with age not matching date_of_birth' do
       it 'returns 422' do
-        post '/api/v1/users', params: valid_params.merge(age: 25), as: :json
+        token = create(:token)
+        post '/api/v1/users', params: valid_params.merge(age: 25), headers: { 'Authorization' => token.value },
+                              as: :json
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(JSON.parse(response.body)['errors']).to include('age')
@@ -47,7 +54,9 @@ RSpec.describe 'POST /api/v1/users', type: :request do
 
     context 'with invalid email format' do
       it 'returns 422' do
-        post '/api/v1/users', params: valid_params.merge(email: 'invalidemail'), as: :json
+        token = create(:token)
+        post '/api/v1/users', params: valid_params.merge(email: 'invalidemail'),
+                              headers: { 'Authorization' => token.value }, as: :json
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(JSON.parse(response.body)['errors']).to include('email')
@@ -56,7 +65,9 @@ RSpec.describe 'POST /api/v1/users', type: :request do
 
     context 'with invalid phone number' do
       it 'returns 422' do
-        post '/api/v1/users', params: valid_params.merge(phone_number: '123'), as: :json
+        token = create(:token)
+        post '/api/v1/users', params: valid_params.merge(phone_number: '123'),
+                              headers: { 'Authorization' => token.value }, as: :json
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(JSON.parse(response.body)['errors']).to include('phone_number')
@@ -65,7 +76,9 @@ RSpec.describe 'POST /api/v1/users', type: :request do
 
     context 'with mismatched password_confirmation' do
       it 'returns 422' do
-        post '/api/v1/users', params: valid_params.merge(password_confirmation: 'wrongpass'), as: :json
+        token = create(:token)
+        post '/api/v1/users', params: valid_params.merge(password_confirmation: 'wrongpass'),
+                              headers: { 'Authorization' => token.value }, as: :json
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(JSON.parse(response.body)['errors']).to include('password_confirmation')
@@ -73,10 +86,13 @@ RSpec.describe 'POST /api/v1/users', type: :request do
     end
 
     context 'with duplicate email' do
-      before { User.create!(valid_params) }
+      before do
+        create(:user, email: valid_params[:email])
+      end
 
       it 'returns 422' do
-        post '/api/v1/users', params: valid_params, as: :json
+        token = create(:token)
+        post '/api/v1/users', params: valid_params, headers: { 'Authorization' => token.value }, as: :json
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(JSON.parse(response.body)['errors']).to include('email')

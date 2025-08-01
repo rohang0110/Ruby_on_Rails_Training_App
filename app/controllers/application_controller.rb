@@ -15,8 +15,16 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: added_attrs)
   end
 
-  # The path used after sign in
-  def after_sign_in_path_for(resource)
-    '/homepage'
+  private
+
+  def authenticate_admin!
+    token_value = request.headers['Authorization']
+    render json: { error: 'Authorization token missing' }, status: :unauthorized and return if token_value.blank?
+
+    token = Token.find_by(value: token_value)
+    return unless token.nil? || token.expired_at < Time.current
+
+    render json: { error: 'Invalid or expired token' }, status: :unauthorized and return
   end
 end
+
