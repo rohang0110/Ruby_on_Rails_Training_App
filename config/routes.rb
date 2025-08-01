@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+
   resource :profile, only: %i[edit update]
+
 
   apipie
   devise_for :users
@@ -26,4 +28,6 @@ Rails.application.routes.draw do
   end
   # Defines the root path route ("/")
   # root "posts#index"
+
 end
+
