@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-# HomeController handles the logic for the homepage.
 class HomeController < ApplicationController
-  def index; end
+  before_action :authenticate_user!
+
+  def index
+  end
 end

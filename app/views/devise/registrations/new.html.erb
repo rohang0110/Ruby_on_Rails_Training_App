@@ -33,11 +33,12 @@
         <div class="col-md-6 mb-3">
           <%= f.label :date_of_birth, class: "form-label d-block" %>
           <div class="d-flex gap-2">
-            <%= select_day nil, { default: nil }, { name: "user[date_of_birth(3i)]", class: "form-select" } %>
-            <%= select_month nil, { use_month_numbers: true }, { name: "user[date_of_birth(2i)]", class: "form-select" } %>
-            <%= select_year nil, { start_year: 1900, end_year: Date.today.year - 5 }, { name: "user[date_of_birth(1i)]", class: "form-select" } %>
+            <%= select_day(resource.date_of_birth, { default: nil }, { name: "user[date_of_birth(3i)]", class: "form-select" }) %>
+            <%= select_month(resource.date_of_birth, { use_month_numbers: true }, { name: "user[date_of_birth(2i)]", class: "form-select" }) %>
+            <%= select_year(resource.date_of_birth, { start_year: 1900, end_year: Date.today.year - 5 }, { name: "user[date_of_birth(1i)]", class: "form-select" }) %>
           </div>
         </div>
+
 
         <div class="col-md-6 mb-3">
           <%= f.label :password, class: "form-label" %>
@@ -56,11 +57,11 @@
     <% end %>
 
     <div class="text-center mt-3">
-  <p class="text-muted">
-    Already have an account?
-    <%= link_to "Log in", new_user_session_path, class: "text-primary text-decoration-none" %>
-  </p>
-</div>
+      <p class="text-muted">
+        Already have an account?
+        <%= link_to "Log in", new_user_session_path, class: "text-primary text-decoration-none" %>
+      </p>
+    </div>
 
   </div>
 </div>
