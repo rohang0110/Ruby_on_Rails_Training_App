@@ -18,10 +18,7 @@ AllCops:
 Layout/AssignmentIndentation:
   Enabled: true
 Metrics/BlockLength:
-  Exclude:
-    - 'spec/models/user_spec.rb'
-    - 'spec/system/user_sign_in_spec.rb'
-    - 'spec/system/user_sign_up_spec.rb'
+  Enabled: true
 # Ensures comments are properly indented.
 Layout/CommentIndentation:
   Enabled: true
