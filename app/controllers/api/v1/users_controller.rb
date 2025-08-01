@@ -59,6 +59,20 @@ module Api
         render_interaction_result(result, :ok)
       end
 
+      # Delete a user
+      api :DELETE, '/api/v1/users/:id', 'Delete an existing user'
+      param :id, :number, required: true, desc: 'ID of the user to be deleted'
+      description 'Deletes the user by ID and returns a success message.'
+      formats ['json']
+      def destroy
+        result = Api::V1::DeleteUser.run(id: params[:id])
+        if result.valid?
+          render json: result.result, status: :ok
+        else
+          render json: { errors: result.errors.full_messages }, status: :not_found
+        end
+      end
+
       private
 
       # Strong params
