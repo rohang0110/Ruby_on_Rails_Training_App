@@ -52,8 +52,21 @@ module Api
         rescue StandardError
           nil
         end
-
         permitted
+      end
+      api :GET, '/api/v1/users/:id', 'Fetch user by ID'
+      param :id, :number, required: true, desc: 'ID of the user'
+      description 'Returns a single user based on the provided ID.'
+      formats ['json']
+
+      def show
+        user = User.find_by(id: params[:id])
+
+        if user
+          render json: user, serializer: UserSerializer, status: :ok
+        else
+          render json: { error: 'User not found' }, status: :not_found
+        end
       end
     end
   end
