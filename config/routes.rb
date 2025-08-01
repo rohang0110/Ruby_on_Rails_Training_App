@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+
   apipie
   devise_for :users
   get 'homepage', to: 'home#index'
@@ -24,4 +25,6 @@ Rails.application.routes.draw do
   end
   # Defines the root path route ("/")
   # root "posts#index"
+
 end
+
