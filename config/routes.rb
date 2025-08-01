@@ -9,7 +9,11 @@ Rails.application.routes.draw do
 
 
   apipie
-  devise_for :users
+
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
+
   get 'homepage', to: 'home#index'
   root to: redirect('/homepage')
 

@@ -5,7 +5,18 @@
   %div.mt-4
     - if user_signed_in?
       %p.text-success.mb-3 You are signed in as #{current_user.first_name}!
+
+      - case @role
+      - when 'staff'
+        %p.text-info You are logged in as Staff.
+   
+      - when 'customer'
+        %p.text-info You are logged in as a Customer.
+
+
       = button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger m-2"
+
     - else
       = link_to "Register", new_user_registration_path, class: "btn btn-success m-2"
-      = link_to "Login", new_user_session_path, class: "btn btn-outline-primary m-2"
+      = link_to "Staff Login", new_user_session_path(role: 'staff'), class: "btn btn-outline-primary m-2"
+      = link_to "Customer Login", new_user_session_path(role: 'customer'), class: "btn btn-outline-primary m-2"

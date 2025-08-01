@@ -1,7 +1,20 @@
 <div class="container mt-5 d-flex justify-content-center">
   <div class="card shadow p-4" style="max-width: 500px; width: 100%;">
+    
+    <!-- Heading based on role -->
+    <h2 class="text-center text-dark mb-4">
+      <% if params[:role] == 'staff' %>
+        Staff Login
+      <% elsif params[:role] == 'customer' %>
+        Customer Login
+      <% else %>
+        Login
+      <% end %>
+    </h2>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name, role: params[:role])) do |f| %>
+      <%= f.hidden_field :role_type, value: params[:role] %>
+
       <div class="mb-3">
         <%= f.label :email, class: "form-label text-dark" %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
@@ -23,17 +36,19 @@
         <%= f.submit "Log in", class: "btn btn-theme w-100" %>
       </div>
     <% end %>
-<div class="text-center mt-3">
-  <%= link_to "Forgot your password?", new_password_path(resource_name), class: "text-decoration-none text-muted" %>
-</div>
 
-<div class="text-center mt-3">
-  
-  <p class="text-muted">
-    Don't have an account?
-    <%= link_to "Sign up", new_user_registration_path, class: "text-success text-decoration-none" %>
-  </p>
-</div>
+    <div class="text-center mt-3">
+      <%= link_to "Forgot your password?", new_password_path(resource_name), class: "text-decoration-none text-muted" %>
+    </div>
 
+    <% if params[:role] == 'customer' %>
+      <div class="text-center mt-3">
+        <p class="text-muted">
+          Don't have an account?
+          <%= link_to "Sign up", new_user_registration_path, class: "text-success text-decoration-none" %>
+        </p>
+      </div>
+    <% end %>
+    
   </div>
 </div>
