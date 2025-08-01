@@ -1,0 +1,44 @@
+/* Theme form styling */
+.container.registration-container {
+  max-width: 600px;
+  margin: 60px auto;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.registration-container h2 {
+  color: #FF6F61;
+  margin-bottom: 20px;
+}
+
+.registration-container .field label {
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.registration-container .field input,
+.registration-container .field select {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.registration-container .actions input[type="submit"] {
+  background-color: #FF6F61;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.registration-container .actions input[type="submit"]:hover {
+  background-color: #DAA5B3;
+}

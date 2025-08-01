@@ -3,5 +3,9 @@
   %p.lead Your journey begins here.
 
   %div.mt-4
-    %a.btn.btn-success.m-2{ href: "#" } Register
-    %a.btn.btn-outline-primary.m-2{ href: "#" } Login
+    - if user_signed_in?
+      %p.text-success.mb-3 You are signed in as #{current_user.first_name}!
+      = button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger m-2"
+    - else
+      = link_to "Register", new_user_registration_path, class: "btn btn-success m-2"
+      = link_to "Login", new_user_session_path, class: "btn btn-outline-primary m-2"

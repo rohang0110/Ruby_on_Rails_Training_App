@@ -16,6 +16,7 @@ gem 'turbo-rails'
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'stimulus-rails'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
+gem 'devise'
 gem 'dotenv-rails'
 gem 'haml-rails'
 gem 'jbuilder'
@@ -58,10 +59,4 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
-end
-
-group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem 'capybara'
-  gem 'selenium-webdriver'
 end
