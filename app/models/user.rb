@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# User model containing authentication and profile logic.
 class User < ApplicationRecord
   # Devise modules
   devise :database_authenticatable, :registerable,
@@ -15,14 +16,12 @@ class User < ApplicationRecord
   private
 
   def age_matches_dob
-    return unless date_of_birth.present? && age.present?
+    calculated_age = calculate_age(dob)
+    age == calculated_age
+  end
 
-    today = Date.today
-    calculated_age = today.year - date_of_birth.year
-    calculated_age -= 1 if date_of_birth.to_date > today.yield_self do |d|
-      Date.new(d.year, date_of_birth.month, date_of_birth.day)
-    end
-
-    errors.add(:age, 'does not match your date of birth') if calculated_age != age
+  def calculate_age(date)
+    now = Time.zone.now
+    now.year - date.year - (now.month > date.month || (now.month == date.month && now.day >= date.day) ? 0 : 1)
   end
 end
