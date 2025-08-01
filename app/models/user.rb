@@ -16,12 +16,14 @@ class User < ApplicationRecord
   private
 
   def age_matches_dob
-    calculated_age = calculate_age(dob)
-    age == calculated_age
-  end
+    return unless date_of_birth.present? && age.present?
 
-  def calculate_age(date)
-    now = Time.zone.now
-    now.year - date.year - (now.month > date.month || (now.month == date.month && now.day >= date.day) ? 0 : 1)
+    today = Date.today
+    calculated_age = today.year - date_of_birth.year
+    calculated_age -= 1 if date_of_birth.to_date > today.yield_self do |d|
+      Date.new(d.year, date_of_birth.month, date_of_birth.day)
+    end
+
+    errors.add(:age, 'does not match your date of birth') if calculated_age != age
   end
 end
