@@ -1,0 +1,26 @@
+%h2.text-center.mb-4 Open Restaurants
+
+.container
+  .card-grid
+    - @restaurants.each do |restaurant|
+      .restaurant-card
+        .card-header
+          %h3= restaurant.name
+          %span.status-badge= restaurant.status.titleize
+
+        .card-body
+          %p
+            %strong Description:
+            = truncate(restaurant.description, length: 100)
+
+          %p
+            %strong Location:
+            = restaurant.location
+
+          %p
+            %strong Cuisine:
+            = restaurant.cuisine_type
+
+          %p
+            %strong Rating:
+            = restaurant.rating || 'N/A'

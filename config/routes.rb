@@ -2,6 +2,9 @@
 
 Rails.application.routes.draw do
 
+  resources :restaurants, only: %i[new create index]
+
+
   resource :profile, only: %i[edit update]
 
 
@@ -9,6 +12,8 @@ Rails.application.routes.draw do
   devise_for :users
   get 'homepage', to: 'home#index'
   root to: redirect('/homepage')
+
+  resources :restaurants, only: %i[new create index]
 
   resource :avatar, only: %i[edit update destroy], controller: 'avatars'
 
