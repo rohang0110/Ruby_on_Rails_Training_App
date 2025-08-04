@@ -1,0 +1,21 @@
+= form_with(model: [@restaurant, @table], local: true, class: 'table-form') do |f|
+  - if @table.errors.any?
+    .error-messages
+      %ul
+        - @table.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :table_number
+    = f.number_field :table_number, min: 1, class: 'form-control'
+
+  .form-group
+    = f.label :seats
+    = f.number_field :seats, min: 1, class: 'form-control'
+
+  .form-group
+    = f.label :status
+    = f.select :status, Table.statuses.keys.map { |s| [s.humanize, s] }, {}, class: 'form-control'
+
+  .form-actions
+    = f.submit class: 'btn btn-primary'
