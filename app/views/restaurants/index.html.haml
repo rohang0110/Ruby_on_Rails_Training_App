@@ -25,6 +25,13 @@
               = "#{restaurant.rating || 'N/A'} / 5"
 
           .card-footer.bg-white.border-0.mt-auto
-            = link_to "View Tables", restaurant_tables_path(restaurant), class: "btn btn-sm btn-primary w-100"
+            .d-grid.gap-2
+              = link_to "View Tables", restaurant_tables_path(restaurant), class: "btn btn-sm btn-primary"
+              = link_to "Manage Menu", restaurant_menu_path(restaurant), class: "btn btn-sm btn-outline-success"
+
+
+
+
+
   
 = will_paginate @restaurants, params: { sort: params[:sort] }

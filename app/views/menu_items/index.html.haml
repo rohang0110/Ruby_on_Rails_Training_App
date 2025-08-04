@@ -1,0 +1,53 @@
+%main
+  .content-container
+    .main-header
+      %h1.header-title
+        Menu for #{@restaurant.name}
+      %p.header-subtitle
+        Manage and organize menu items for your restaurant.
+
+    .filter-section
+      .filter-form-wrapper.flex.justify-between.items-end
+        = form_with url: restaurant_menu_path(@restaurant), method: :get, local: true, class: 'filter-form flex space-x-4 items-end' do |f|
+          .filter-group.flex.space-x-4
+            .filter-item
+              = f.label :category, 'Filter by Category:', class: 'filter-label block text-sm font-medium text-gray-700'
+              = f.select :category, options_for_select(MenuItem.distinct.pluck(:category), selected: params[:category]), include_blank: 'All', class: 'select-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+
+            .filter-item
+              = f.label :available, 'Availability:', class: 'filter-label block text-sm font-medium text-gray-700'
+              = f.select :available, options_for_select([['Available', true], ['Unavailable', false]], selected: params[:available]), include_blank: 'All', class: 'select-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+
+          = f.submit 'Apply Filter', class: 'filter-button inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none'
+
+        = link_to 'Add Menu Item', new_restaurant_menu_item_path(@restaurant), class: 'add-button inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700'
+
+    %turbo_frame_tag{id: 'menu_items'}
+      .table-container
+        %table.data-table
+          %thead.table-head
+            %tr
+              - %w[Id Item\ Name Description Price Category Status Actions].each do |col|
+                %th.table-header= col
+
+          %tbody.table-body
+            - if @menu_items.any?
+              - @menu_items.each do |item|
+                %tr.table-row{class: item.available? ? 'available' : 'occupied'}
+                  %td.table-cell= item.id
+                  %td.table-cell= item.item_name
+                  %td.table-cell= truncate(item.description, length: 50)
+                  %td.table-cell= number_to_currency(item.price)
+                  %td.table-cell= item.category
+                  %td.table-cell
+                    %span.status-badge= item.available? ? 'Available' : 'Unavailable'
+                  %td.table-cell.flex.space-x-2
+                    = link_to 'Edit', edit_restaurant_menu_item_path(@restaurant, item), class: 'edit-button'
+                    = button_to 'Delete', restaurant_menu_item_path(@restaurant, item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'delete-button'
+            - else
+              %tr
+                %td.no-data{colspan: 7}
+                  No menu items found for the selected filter.
+
+      .pagination-section
+        = will_paginate @menu_items, renderer: WillPaginate::ActionView::LinkRenderer, class: 'pagination'

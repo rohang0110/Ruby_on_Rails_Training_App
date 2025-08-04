@@ -3,6 +3,8 @@
 class Restaurant < ApplicationRecord
   belongs_to :user
   has_many :tables, dependent: :destroy
+  has_many :menu_items, dependent: :destroy
+
   include AASM
 
   aasm column: :status do

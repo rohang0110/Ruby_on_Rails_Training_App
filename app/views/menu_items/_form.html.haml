@@ -1,0 +1,23 @@
+= form_with model: [@restaurant, @menu_item], local: true, class: "menu-item-form-container grid grid-cols-2 gap-4" do |f|
+  .form-group
+    = f.label :item_name
+    = f.text_field :item_name
+
+  .form-group
+    = f.label :category
+    = f.text_field :category
+
+  .col-span-2.form-group
+    = f.label :description
+    = f.text_area :description, rows: 3
+
+  .form-group
+    = f.label :price
+    = f.number_field :price, step: 0.01
+
+  .form-group.checkbox-label
+    = f.check_box :available
+    = f.label :available, "Available?"
+
+  .col-span-2
+    = f.submit "Save", class: "submit-btn"

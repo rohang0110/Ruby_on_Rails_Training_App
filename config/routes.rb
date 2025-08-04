@@ -35,6 +35,10 @@ Rails.application.routes.draw do
   resources :restaurants, only: [:index] do
     resources :tables, only: [:index], controller: 'restaurant_tables'
   end
+  resources :restaurants do
+    get 'menu', to: 'menu_items#index', as: :menu
+    resources :menu_items, path: 'menu', except: %i[index show]
+  end
 
   # Defines the root path route ("/")
   # root "posts#index"
