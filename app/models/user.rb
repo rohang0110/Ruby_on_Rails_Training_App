@@ -7,6 +7,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :restaurants, dependent: :destroy
+  has_many :reservations
 
   # Validations
   validates :first_name, :last_name, :phone_number, :date_of_birth, :age, presence: true

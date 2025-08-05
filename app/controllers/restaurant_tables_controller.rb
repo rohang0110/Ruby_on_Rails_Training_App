@@ -45,7 +45,11 @@ class RestaurantTablesController < ApplicationController
   private
 
   def set_restaurant
-    @restaurant = current_user.restaurants.find(params[:restaurant_id])
+    @restaurant = if current_user.staff?
+                    current_user.restaurants.find(params[:restaurant_id])
+                  else
+                    Restaurant.find(params[:restaurant_id]) # Allow customers to view any restaurant
+                  end
   end
 
   def set_table

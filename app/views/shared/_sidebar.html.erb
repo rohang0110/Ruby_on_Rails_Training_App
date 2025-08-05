@@ -43,6 +43,14 @@
             <%= link_to "Update Personal Information", edit_profile_path, class: "nav-link" %>
           </div>
         </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" data-bs-toggle="collapse" href="#restaurantMenu" role="button" aria-expanded="false" aria-controls="restaurantMenu">
+            <i class="bi bi-shop me-2"></i> Restaurants
+          </a>
+          <div class="collapse ps-4" id="restaurantMenu">
+            <%= link_to "Restaurants", restaurants_path, class: "nav-link" %>
+          </div>
+        </li>
 
         <!-- Customer Orders -->
         <li class="nav-item">

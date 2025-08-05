@@ -4,41 +4,62 @@
       %h1.header-title
         List of Tables for #{@restaurant.name}
       %p.header-subtitle
-        Manage table statuses and seating for your restaurant.
+        - if current_user.staff?
+          Manage table statuses and seating for your restaurant.
+        - elsif current_user.customer?
+          Choose a table to make a reservation.
 
     .content-body
-      .toolbar.flex.items-end.gap-4.flex-wrap.mb-4
-        = form_with url: restaurant_tables_path(@restaurant), method: :get, local: true, class: 'flex items-end gap-4' do |f|
-          .flex.flex-col
-            = f.label :status, 'Filter by Status', class: 'block text-sm font-medium text-gray-700'
-            = f.select :status, options_for_select(Table.statuses.keys.map { |s| [s.humanize, s] }, selected: params[:status]), { include_blank: 'All' }, class: 'mt-1 block w-48 rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-          = f.submit 'Apply Filter', class: 'btn btn-primary'
-        = link_to 'Add Table', new_restaurant_table_path(@restaurant), class: 'btn btn-success'
+      - if current_user.staff?
+        .toolbar.flex.items-end.gap-4.flex-wrap.mb-4
+          = form_with url: restaurant_tables_path(@restaurant), method: :get, local: true, class: 'flex items-end gap-4' do |f|
+            .flex.flex-col
+              = f.label :status, 'Filter by Status', class: 'block text-sm font-medium text-gray-700'
+              = f.select :status, options_for_select(Table.statuses.keys.map { |s| [s.humanize, s] }, selected: params[:status]), { include_blank: 'All' }, class: 'mt-1 block w-48 rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+            = f.submit 'Apply Filter', class: 'btn btn-primary'
+          = link_to 'Add Table', new_restaurant_table_path(@restaurant), class: 'btn btn-success'
 
       %turbo_frame_tag{id: 'tables'}
         .table-container
           %table.data-table
             %thead.table-head
               %tr
-                - %w[Id Table\ Number Seats Status Actions].each do |col|
-                  %th.table-header= col
+                - if current_user.staff?
+                  - %w[Id Table\ Number Seats Status Actions].each do |col|
+                    %th.table-header= col
+                - elsif current_user.customer?
+                  - %w[Table\ Number Seats Status Reserve].each do |col|
+                    %th.table-header= col
 
             %tbody.table-body
               - if @tables.any?
                 - @tables.each do |table|
                   %tr.table-row{class: table.status}
-                    %td.table-cell= table.id
-                    %td.table-cell= table.table_number
-                    %td.table-cell= table.seats
-                    %td.table-cell
-                      %span.status-badge= table.status.humanize
-                    %td.table-cell
-                      = link_to 'Edit', edit_restaurant_table_path(@restaurant, table), class: 'btn btn-sm btn-secondary mr-2'
-                      = button_to 'Delete', restaurant_table_path(@restaurant, table), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+                    - if current_user.staff?
+                      %td.table-cell= table.id
+                      %td.table-cell= table.table_number
+                      %td.table-cell= table.seats
+                      %td.table-cell
+                        %span.status-badge= table.status.humanize
+                      %td.table-cell
+                        = link_to 'Edit', edit_restaurant_table_path(@restaurant, table), class: 'btn btn-sm btn-secondary mr-2'
+                        = button_to 'Delete', restaurant_table_path(@restaurant, table), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+
+                    - elsif current_user.customer?
+                      %td.table-cell= table.table_number
+                      %td.table-cell= table.seats
+                      %td.table-cell
+                        %span.status-badge= table.status.humanize
+                      %td.table-cell
+                        - if table.status == 'available'
+                          = link_to 'Reserve', new_restaurant_reservation_path(@restaurant, table_id: table.id), class: 'btn btn-sm btn-primary'
+
+                        - else
+                          %span.text-gray-500 Not Available
 
               - else
                 %tr
-                  %td.no-data{colspan: 5}
+                  %td.no-data{colspan: current_user.staff? ? 5 : 4}
                     No tables found for the selected filter.
 
       .pagination-section.mt-4

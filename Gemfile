@@ -28,8 +28,15 @@ gem 'pry'
 gem 'rspec-rails'
 gem 'rubocop', require: false
 gem 'selenium-webdriver'
+gem 'simple_form'
 gem 'webdrivers'
 gem 'will_paginate'
+group :development do
+  gem 'letter_opener_web'
+end
+group :test do
+  gem 'shoulda-matchers'
+end
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"

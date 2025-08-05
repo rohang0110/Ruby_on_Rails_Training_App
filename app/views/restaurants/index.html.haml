@@ -26,8 +26,15 @@
 
           .card-footer.bg-white.border-0.mt-auto
             .d-grid.gap-2
-              = link_to "View Tables", restaurant_tables_path(restaurant), class: "btn btn-sm btn-primary"
-              = link_to "Manage Menu", restaurant_menu_path(restaurant), class: "btn btn-sm btn-outline-success"
+              - if current_user.staff?
+                = link_to "View Tables", restaurant_tables_path(restaurant), class: "btn btn-sm btn-primary"
+                = link_to "Manage Menu", restaurant_menu_path(restaurant), class: "btn btn-sm btn-outline-success"
+                = link_to "View Reservations", restaurant_reservations_path(restaurant), class: "btn btn-primary"
+              - elsif current_user.customer?
+                = link_to "Make Reservation", restaurant_tables_path(restaurant), class: "btn btn-success"
+
+
+
 
 
 

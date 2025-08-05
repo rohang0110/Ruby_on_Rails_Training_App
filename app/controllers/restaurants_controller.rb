@@ -23,13 +23,16 @@ class RestaurantsController < ApplicationController
                       else
                         'asc'
                       end
-    @restaurants = current_user.restaurants.order("#{@sort_column} #{@sort_direction}").paginate(page: params[:page],
-                                                                                                 per_page: 9)
-  end
 
-  private
+    @restaurants =
+      if current_user.staff?
+        current_user.restaurants.order("#{@sort_column} #{@sort_direction}")
+      elsif current_user.customer?
+        Restaurant.where(status: :open).order("#{@sort_column} #{@sort_direction}")
+      else
+        Restaurant.none
+      end
 
-  def restaurant_params
-    params.require(:restaurant).permit(:name, :description, :location, :cuisine_type)
+    @restaurants = @restaurants.paginate(page: params[:page], per_page: 9)
   end
 end

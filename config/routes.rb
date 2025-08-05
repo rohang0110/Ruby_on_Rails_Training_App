@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
+
   resources :restaurants, only: %i[new create index]
 
   resource :profile, only: %i[edit update]
@@ -38,6 +40,15 @@ Rails.application.routes.draw do
   resources :restaurants do
     get 'menu', to: 'menu_items#index', as: :menu
     resources :menu_items, path: 'menu', except: %i[index show]
+  end
+
+  resources :restaurants do
+    resources :reservations, only: %i[index new create] do
+      member do
+        patch :confirm
+        patch :cancel
+      end
+    end
   end
 
   # Defines the root path route ("/")
