@@ -1,0 +1,23 @@
+.container
+  %h1.feedback-title Feedbacks
+
+  %table.feedback-table
+    %thead
+      %tr
+        %th Customer Name
+        %th Restaurant
+        %th Rating
+        %th Comment
+    %tbody
+      - @feedbacks.each do |feedback|
+        %tr
+          %td= feedback[:customer_name]
+          %td= feedback[:restaurant_name]
+          %td
+            - full_stars = feedback[:rating].to_i
+            - empty_stars = 5 - full_stars
+            - full_stars.times do
+              %span.star.full ★
+            - empty_stars.times do
+              %span.star.empty ☆
+          %td= feedback[:comment]

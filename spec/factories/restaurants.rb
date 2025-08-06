@@ -8,6 +8,6 @@ FactoryBot.define do
     status { :open }
     note { Faker::Lorem.sentence }
     likes { rand(0..1000) }
-    association :user
+    association :user, factory: :staff_user
   end
 end

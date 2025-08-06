@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   has_many :restaurants, dependent: :destroy
   has_many :reservations
-
+  has_many :feedbacks, dependent: :destroy
   # Validations
   validates :first_name, :last_name, :phone_number, :date_of_birth, :age, presence: true
   validates :age, numericality: { only_integer: true, greater_than_or_equal_to: 0 }

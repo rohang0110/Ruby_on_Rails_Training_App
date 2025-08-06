@@ -1,0 +1,69 @@
+.modal.fade#feedbackModal{ tabindex: "-1", aria: { labelledby: "feedbackModalLabel", hidden: "true" } }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h5.modal-title#feedbackModalLabel Give Feedback
+        %button.btn-close{ type: "button", data: { bs_dismiss: "modal" }, aria: { label: "Close" } }
+
+      .modal-body
+        = form_with model: Feedback.new, url: feedbacks_path, local: true do |f|
+          = f.hidden_field :current_url, value: request.original_url
+          = f.hidden_field :restaurant_id, value: @restaurant&.id
+
+          .mb-3
+            %label.form-label Rate your experience
+            .star-rating{ data: { selected: 0 } }
+              - (1..5).each do |i|
+                %i.fa.fa-star-o.star{ data: { value: i } }
+            = f.hidden_field :rating, id: "rating_input"
+
+          .mb-3
+            = f.label :comment
+            = f.text_area :comment, class: "form-control", rows: 5
+
+          = f.submit "Submit Feedback", class: "btn btn-primary w-100"
+
+:javascript
+  document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("feedbackModal");
+
+    modal.addEventListener("shown.bs.modal", function () {
+      const stars = modal.querySelectorAll(".star-rating .star");
+      const ratingInput = modal.querySelector("#rating_input");
+      const container = modal.querySelector(".star-rating");
+
+      function highlightStars(rating) {
+        stars.forEach(star => {
+          const value = parseInt(star.dataset.value);
+          if (value <= rating) {
+            star.classList.remove("fa-star-o");
+            star.classList.add("fa-star");
+          } else {
+            star.classList.remove("fa-star");
+            star.classList.add("fa-star-o");
+          }
+        });
+      }
+
+      stars.forEach(star => {
+        star.addEventListener("mouseenter", function () {
+          highlightStars(parseInt(star.dataset.value));
+        });
+
+        star.addEventListener("mouseleave", function () {
+          const selected = parseInt(container.dataset.selected || 0);
+          highlightStars(selected);
+        });
+
+        star.addEventListener("click", function () {
+          const val = parseInt(star.dataset.value);
+          ratingInput.value = val;
+          container.dataset.selected = val;
+          highlightStars(val);
+        });
+      });
+
+      const initial = parseInt(container.dataset.selected || 0);
+      highlightStars(initial);
+    });
+  });

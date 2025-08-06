@@ -27,9 +27,11 @@
     <%= stylesheet_link_tag "theme", media: "all" %>
     <%= stylesheet_link_tag "restaurant_tables", media: "all" %>
     <%= stylesheet_link_tag "menu_items", media: "all" %>
+    <%= stylesheet_link_tag "reservations", media: "all" %>
+    <%= stylesheet_link_tag "feedback", media: "all" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <%= javascript_importmap_tags %>
 
     <style>
@@ -79,6 +81,7 @@
         <!-- Right: Avatar (only when signed in) -->
 
     <% if user_signed_in? %>
+          
       <div class="d-flex align-items-center">
         <%= link_to edit_avatar_path, class: "rounded-circle overflow-hidden border border-white", style: "width: 42px; height: 42px;" do %>
           <% if current_user.avatar.attached? %>
@@ -110,6 +113,16 @@
 
     <!-- Main Content -->
       <%= yield %>
+    <% if user_signed_in? && current_user.customer? %>
+  <button type="button" class="btn btn-link position-fixed bottom-0 end-0 m-3 p-2 rounded-circle bg-primary text-white shadow"
+          data-bs-toggle="modal" data-bs-target="#feedbackModal"
+          title="Give Feedback" style="z-index: 1050;">
+    <i class="fa fa-comment" style="font-size: 1.5rem;"></i>
+  </button>
+<% end %>
+
+
+    <%= render 'shared/feedback_modal'%>
 
     <!-- Footer -->
     <footer class="bg-light text-center text-muted py-3">

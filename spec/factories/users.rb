@@ -11,5 +11,14 @@ FactoryBot.define do
     date_of_birth { 25.years.ago.to_date }
     password { 'Secure123!' }
     password_confirmation { 'Secure123!' }
+    role_type { rand(2..3) }
+
+    factory :staff_user do
+      role_type { :staff }
+    end
+
+    factory :customer_user do
+      role_type { :customer }
+    end
   end
 end

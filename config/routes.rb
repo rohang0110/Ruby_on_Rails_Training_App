@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :restaurants, only: %i[new create index]
 
   resource :profile, only: %i[edit update]
+  resources :feedbacks, only: %i[new create index]
 
   apipie
 
