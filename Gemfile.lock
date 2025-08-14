@@ -82,7 +82,6 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
     apipie-rails (1.4.2)
@@ -100,7 +99,6 @@ GEM
     brakeman (7.0.2)
       racc
     builder (3.3.0)
-
     capybara (3.40.0)
       addressable
       matrix
@@ -133,7 +131,7 @@ GEM
       railties (>= 6.1)
     drb (2.2.3)
     ed25519 (1.4.0)
-    erb (5.0.1)
+    erb (5.0.2)
     erubi (1.13.1)
     et-orbi (1.2.11)
       tzinfo
@@ -173,7 +171,7 @@ GEM
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
-    io-console (0.8.0)
+    io-console (0.8.1)
     irb (1.15.2)
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
@@ -206,12 +204,10 @@ GEM
       net-pop
       net-smtp
     marcel (1.0.4)
-
     matrix (0.4.3)
     method_source (1.1.0)
     mini_magick (5.3.0)
       logger
-
     mini_mime (1.1.5)
     minitest (5.25.5)
     msgpack (1.8.0)
@@ -230,17 +226,17 @@ GEM
       net-protocol
     net-ssh (7.3.0)
     nio4r (2.7.4)
-    nokogiri (1.18.8-aarch64-linux-gnu)
+    nokogiri (1.18.9-aarch64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.8-aarch64-linux-musl)
+    nokogiri (1.18.9-aarch64-linux-musl)
       racc (~> 1.4)
-    nokogiri (1.18.8-arm-linux-gnu)
+    nokogiri (1.18.9-arm-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.8-arm-linux-musl)
+    nokogiri (1.18.9-arm-linux-musl)
       racc (~> 1.4)
-    nokogiri (1.18.8-x86_64-linux-gnu)
+    nokogiri (1.18.9-x86_64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.8-x86_64-linux-musl)
+    nokogiri (1.18.9-x86_64-linux-musl)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     ostruct (0.6.2)
@@ -264,11 +260,12 @@ GEM
     psych (5.2.6)
       date
       stringio
+    public_suffix (6.0.2)
     puma (6.6.0)
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.1.16)
+    rack (3.2.0)
     rack-session (2.1.1)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -311,13 +308,11 @@ GEM
       erb
       psych (>= 4.0.0)
     regexp_parser (2.10.0)
-    reline (0.6.1)
+    reline (0.6.2)
       io-console (~> 0.5)
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-
-    rexml (3.4.1)
     rspec-core (3.13.5)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.5)
@@ -335,7 +330,6 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.4)
-
     rubocop (1.77.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -365,14 +359,11 @@ GEM
       rubocop-performance (>= 1.24)
       rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
-
     ruby-vips (2.2.4)
       ffi (~> 1.12)
       logger
-    rubyzip (2.4.1)
-
     securerandom (0.4.1)
-    solid_cable (3.0.11)
+    solid_cable (3.0.12)
       actioncable (>= 7.2)
       activejob (>= 7.2)
       activerecord (>= 7.2)
@@ -422,16 +413,12 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webdrivers (5.2.0)
-      nokogiri (~> 1.6)
-      rubyzip (>= 1.3.0)
-      selenium-webdriver (~> 4.0)
-    websocket (1.2.11)
-
     websocket-driver (0.8.0)
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    xpath (3.2.0)
+      nokogiri (~> 1.8)
     zeitwerk (2.7.3)
 
 PLATFORMS
@@ -451,6 +438,7 @@ DEPENDENCIES
   apipie-rails
   bootsnap
   brakeman
+  capybara
   debug
   devise
   dotenv-rails
@@ -477,7 +465,6 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   web-console
-  webdrivers
 
 BUNDLED WITH
    2.6.7
